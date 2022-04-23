@@ -1,0 +1,12 @@
+C:\Users\gelgin\Dropbox\Grant\StructionSite\ImagePack\ImagePack\ImagePack.Service\bin\Debug\net6.0\ImagePack.Service.deps.json
+C:\Users\gelgin\Dropbox\Grant\StructionSite\ImagePack\ImagePack\ImagePack.Service\bin\Debug\net6.0\ImagePack.Service.dll
+C:\Users\gelgin\Dropbox\Grant\StructionSite\ImagePack\ImagePack\ImagePack.Service\bin\Debug\net6.0\ImagePack.Service.pdb
+C:\Users\gelgin\Dropbox\Grant\StructionSite\ImagePack\ImagePack\ImagePack.Service\obj\Debug\net6.0\ImagePack.Service.csproj.AssemblyReference.cache
+C:\Users\gelgin\Dropbox\Grant\StructionSite\ImagePack\ImagePack\ImagePack.Service\obj\Debug\net6.0\ImagePack.Service.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\gelgin\Dropbox\Grant\StructionSite\ImagePack\ImagePack\ImagePack.Service\obj\Debug\net6.0\ImagePack.Service.AssemblyInfoInputs.cache
+C:\Users\gelgin\Dropbox\Grant\StructionSite\ImagePack\ImagePack\ImagePack.Service\obj\Debug\net6.0\ImagePack.Service.AssemblyInfo.cs
+C:\Users\gelgin\Dropbox\Grant\StructionSite\ImagePack\ImagePack\ImagePack.Service\obj\Debug\net6.0\ImagePack.Service.csproj.CoreCompileInputs.cache
+C:\Users\gelgin\Dropbox\Grant\StructionSite\ImagePack\ImagePack\ImagePack.Service\obj\Debug\net6.0\ImagePack.Service.dll
+C:\Users\gelgin\Dropbox\Grant\StructionSite\ImagePack\ImagePack\ImagePack.Service\obj\Debug\net6.0\refint\ImagePack.Service.dll
+C:\Users\gelgin\Dropbox\Grant\StructionSite\ImagePack\ImagePack\ImagePack.Service\obj\Debug\net6.0\ImagePack.Service.pdb
+C:\Users\gelgin\Dropbox\Grant\StructionSite\ImagePack\ImagePack\ImagePack.Service\obj\Debug\net6.0\ref\ImagePack.Service.dll
