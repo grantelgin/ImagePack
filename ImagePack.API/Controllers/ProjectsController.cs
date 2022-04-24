@@ -14,6 +14,7 @@ namespace ImagePack.API.Controllers
         {
             _svc = svc;
         }
+
         [HttpGet]
         public IEnumerable<Project> Get()
         {

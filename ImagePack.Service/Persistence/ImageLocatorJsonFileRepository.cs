@@ -18,21 +18,22 @@ namespace ImagePack.ProjectImages.Persistence
         
         public ImageLocatorJsonFileRepository(IConfiguration config)
         {
-            string configEntry = "imagePack:projectImages:jsonFileRepo:jsonRepoFile";
-            _jsonFilePathProjectCollectionLocator = config[configEntry];
+            string jsonRepoFileConfigEntry = "imagePack:projectImages:jsonFileRepo:jsonRepoFile";
+            _jsonFilePathProjectCollectionLocator = config[jsonRepoFileConfigEntry];
             if (!File.Exists(_jsonFilePathProjectCollectionLocator))
             {
-                throw new FileNotFoundException($"The repository file '{_jsonFilePathProjectCollectionLocator}' for '{configEntry}' could not be found.");
+                throw new FileNotFoundException($"The repository file '{_jsonFilePathProjectCollectionLocator}' for '{jsonRepoFileConfigEntry}' could not be found.");
             }
 
-            string configEntry2 = "imagePack:projectImages:jsonFileRepo:imageLocatorDataDirectory";
-            _projectCollectionDataFolder = config[configEntry2];
+            string dataDirectoryConfigEntry = "imagePack:projectImages:jsonFileRepo:imageLocatorDataDirectory";
+            _projectCollectionDataFolder = config[dataDirectoryConfigEntry];
             if (!Directory.Exists(_projectCollectionDataFolder))
             {
                 throw new DirectoryNotFoundException(
-                    $"The repository data directory '{_projectCollectionDataFolder}' for '{configEntry2}' could not be found.");
+                    $"The repository data directory '{_projectCollectionDataFolder}' for '{dataDirectoryConfigEntry}' could not be found.");
             }
         }
+        
         public IEnumerable<ImageLocator> GetAllByProjectId(int projectId)
         {
             IEnumerable<ImageLocator> result = new List<ImageLocator>();
@@ -69,6 +70,12 @@ namespace ImagePack.ProjectImages.Persistence
             return projectImageFileCollectionFilePath;
         }
 
+        /// <summary>
+        /// This class is specific to this Json File implementation of the ImageLocatorRepository.
+        /// This is a DTO that points to the Json repo files for a project.
+        /// In a SQL or key-value store repository, the data would be stored in a separate table for each project,
+        /// or a column for projectId would be used for locating the subset of images associated with the project.
+        /// </summary>
         internal class ProjectImageCollectionLocator
         {
             public string ImageCollectionJsonFile { get; set; }
