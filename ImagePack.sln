@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImagePack.ProjectImages", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImagePack.Projects", "ImagePack.Projects\ImagePack.Projects.csproj", "{CF52A6B9-508E-44FA-813F-2966804E9B41}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImagePack.Tests", "ImagePack.Tests\ImagePack.Tests.csproj", "{F1AEFD37-9556-442C-9421-605219B4A22F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{CF52A6B9-508E-44FA-813F-2966804E9B41}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CF52A6B9-508E-44FA-813F-2966804E9B41}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CF52A6B9-508E-44FA-813F-2966804E9B41}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1AEFD37-9556-442C-9421-605219B4A22F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1AEFD37-9556-442C-9421-605219B4A22F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1AEFD37-9556-442C-9421-605219B4A22F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1AEFD37-9556-442C-9421-605219B4A22F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

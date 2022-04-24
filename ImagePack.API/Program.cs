@@ -7,32 +7,42 @@ using ImagePack.Projects.Domain.Services;
 using ImagePack.Projects.Persistence;
 using ImagePack.Projects.Services;
 
-var builder = WebApplication.CreateBuilder(args);
+namespace ImagePack.API;
+
+public class Program
+{
+    public static void Main(string[] args)
+    {
+
+        var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddScoped<IImagePackProjectsRepository, ImagePackProjectsJsonFileRepository>();
-builder.Services.AddScoped<IImagePackProjectService, ImagePackProjectService>();
-builder.Services.AddScoped<IImageLocatorRepository, ImageLocatorJsonFileRepository>();
-builder.Services.AddScoped<IImageLocatorService, ImagePathLocatorService>();
+        builder.Services.AddScoped<IImagePackProjectsRepository, ImagePackProjectsJsonFileRepository>();
+        builder.Services.AddScoped<IImagePackProjectService, ImagePackProjectService>();
+        builder.Services.AddScoped<IImageLocatorRepository, ImageLocatorJsonFileRepository>();
+        builder.Services.AddScoped<IImageLocatorService, ImagePathLocatorService>();
 
-builder.Services.AddControllers();
+        builder.Services.AddControllers();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+        builder.Services.AddEndpointsApiExplorer();
+        builder.Services.AddSwaggerGen();
 
-var app = builder.Build();
+        var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 //if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
+        {
+            app.UseSwagger();
+            app.UseSwaggerUI();
+        }
+
+        app.UseHttpsRedirection();
+
+        app.UseAuthorization();
+
+        app.MapControllers();
+
+        app.Run();
+    }
 }
-
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.Run();
