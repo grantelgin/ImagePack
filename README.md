@@ -95,8 +95,3 @@ In this implementation, each project has a separate json file which contains lin
 ### Services
 In the ImagePack context, the ProjectImages service is simple and implements the Domain Service, where it then just calls the repository methods by the same name. In a more complicated domain, the service could access or update multiple repositories. If this service is extended to support adding new images to projects, or adding new projects. 
 Consider publishing events when images are added to a project. Subscribers could be notified and update their state as appropriate.
-
-
-
-
-
