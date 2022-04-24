@@ -1,25 +1,58 @@
 # ImagePack
 
-## Introduction
-ImagePack is a web service providing image collections associated with a project.
+## Overview
+ImagePack is a simple web service providing image collections for a project.
+The project is organized into 3 main modules. See each section for more details.
+- [**ImagePack.API**](#ImagePack.API)
+- [**ImagePack.Projects**](#ImagePack.Projects)
+- [**ImagePack.ProjectImages**](#ImagePack.ProjectImages)
 
 ## Technologies
+ImagePack was built on Linux using Microsoft .NET 6
 
 - [ASP.NET 6](https://docs.microsoft.com/en-us/aspnet/core/introduction-to-aspnet-core?view=aspnetcore-6.0)
 - [NUnit](https://nunit.org/)
 
 
 ## Getting Started
-This project was built on Linux using Microsoft .NET 6.
+-----------------------
+Clone this repo to your machine 
+- using the GitHub CLI ```gh repo clone grantelgin/ImagePack```
+ - or use ```https://github.com/grantelgin/ImagePack.git``` 
+
+ Before building, confirm you have the .NET 6 SDK installed on your machine.
+ - [Install on Linux](https://docs.microsoft.com/en-us/dotnet/core/install/linux?WT.mc_id=dotnet-35129-website)
+ - [Install on Mac](https://docs.microsoft.com/en-us/dotnet/core/install/macos)
+ - [Install on Windows](https://docs.microsoft.com/en-us/dotnet/core/install/windows?tabs=net60)
 
 
+**Build using an IDE**
+
+If available, use JetBrains Rider, Visual Studio Code or Visual Studio to load the solution. Select the ImagePack.API as the start up project and run or debug. 
 
 
+**Build using the Terminal**
 
-## Overview
+To build from the command line, navigate to the folder of the ImagePack.sln and run 
+ ```dotnet build ```
 
-### ImagePack.API
-This is the application layer and entry point fir the ImagePack project. 
+ Next, navigate to the ImagePack.API folder and run it using ```dotnet run```
+ The default settings are to bind to localhost port 7138.
+
+ If you need to use a different url, you can navigate to the ```ImagePack.API/bin/Debug/net6.0``` folder and run ```ImagePack.API.exe --urls "https://localhost:your-port"```
+
+ You can confirm it is running by viewing the Swagger interface. See details in the *ImagePack.API* section.
+
+
+## ImagePack.API
+-----------------
+This is the application layer and entry point for the ImagePack project. 
+The ImagePack API includes a swagger UI for displaying API documentation in a human-friendly way.
+
+To access the Swagger interface after building and running the project, open your browser and go to ```https://<your-localhost-url>/swagger/index.html```
+
+The swagger interface lists all available resources with details on required arguments and provides an interface for testing the API.
+
 
 **Program.cs**
 
@@ -33,7 +66,7 @@ See the section *imagePack*. All config entries accessed in linked services are 
 
 
 
-### ImagePack.Projects
+## ImagePack.Projects
 The Projects service provides methods for accessing the list of available projects and their details such as a project name or id.
 
 ### Domain
@@ -66,7 +99,8 @@ To replace the Json file repository, add a new class that implements ImagePack.P
 In the ImagePack context, the Projects service is simple and implements the Domain Service, where it then just calls the repository methods by the same name. In a more complicated domain, the service could access or update multiple repositories. Consider publishing events if any collections are updated. If this needs functionality to add a Project, then the service should publish an event that other services could subscribe to. One example would be the ProjectImages service could add an empty collection of images for a new project without any additional steps in the process.
 
 
-### ImagePack.ProjectImages
+## ImagePack.ProjectImages
+---------------------------
 That
 
 ### Domain
