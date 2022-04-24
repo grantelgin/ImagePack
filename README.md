@@ -69,33 +69,43 @@ See the section *imagePack*. All config entries accessed in linked services are 
 ## ImagePack.Projects
 The Projects service provides methods for accessing the list of available projects and their details such as a project name or id.
 
-### Domain
-**Models**
+Structurally, ImagePack.Projects is a microservice and contains all business logic for the *bounded context* of a project in this scope, as well as a complete repository and a publicly exposed API for use by other microservices that may need access.
 
-Only one entity is needed in the Projects Domain currently. The Project class containsin a Project name and Id. 
+### Domain
+The domain contains all business logic for the ImagePack.Projects *bounded context*. In this use case, a project is simply a name and unique id, but keeping all logic within the Domain namespace and without external dependencies, allows us to extend Project functionality as needed without the need to fix a web of connected services.
+The domain follows the *Inversion of Control* principle. All logic within the domain is coded against an interface. The concrete implementations are defined at the application layer and can be replaced by various repositories or services as the need arises, without any changes to the domain logic. 
+
+**Models**
+The domain models namespace contains all required entities, value types and domain events. 
+Only one entity is needed in the Projects Domain currently. The Project class contains a Project name and Id. 
 
 **Persistence**
-
+The domain persistence namespace defines the typical CRUD operations required to retrieve and persist state changes within this service. 
 The interface for persistence is simple for the Project domain. We only need 2 methods. One to get all projects, and one to get details for a single project. 
 
 **Services**
-
-Only one service is required and defines the same interface as the persistence layer.
+The domain services namespace defines one or more interfaces that can be implemented to use this service by any calling application. Only one service is required and defines the same interface as the persistence layer.
 
 
 ### Persistence
-One or more repository implementations can be added to the Persistence layer. The first pass uses a simple Json file repository. This should be replaced by a SQL or distributed cache layer such as redis before this would be deployed to any environment beyond testing on developer machines.
+Separate from the Domain namespace, the Persistence namespace provides the collection of concrete classes that implement Persistence interfaces defined within the domain. Every repository must be specific to the *bounded context* the microservice represents. 
+One or more repository implementations can be added to the Persistence layer. This first pass uses a simple Json file repository. This should be replaced by a SQL or distributed cache layer such as redis before this would be deployed to any environment beyond testing on developer machines.
 
 **The Json file repository.**
  See imagePackProjects.json in ImagePack.Projects.Persistence.Data. This file is set to copy to the application directory, and the API layer is configured to find the file there. The path to the repository file can be changed via configuration. See imagePack:projects:jsonFile in the appSettings.json file in ImagePack.API.
 
- To add new projects to the service, see [link to instructons](instructions)
+ To add new projects to the service, follow these steps:
+ 1. Add a project entry to ```ImagePack.Projects/Persistence/Data/imagePackProjects.json```. Make note of the id assigned.
+ 2. Add an entry to ```ImagePack.ProjectImages/Persistence/Data/imagePackProjectImageCollectionLocators.json```
+ 3. Add the project data file to the same folder in step 2. Make sure to change the output property of the file to *copy if newer*.
 
 To replace the Json file repository, add a new class that implements ImagePack.Projects.Domain.Repositories.IImagePackProjectsRepository,
  then in ImagePack.API.Program.cs, replace the  concrete implementation associated with the IImagePackProjectRepository, where the JsonFileREpository is currently listed.
 
 
 ### Services
+Separate from the Domain namespace, the Services namespace provides the concrete implementation of one or more service interfaces defined within the domain. The classes defined here are publicly exposed to allow any calling application to interact with these service classes. 
+
 In the ImagePack context, the Projects service is simple and implements the Domain Service, where it then just calls the repository methods by the same name. In a more complicated domain, the service could access or update multiple repositories. Consider publishing events if any collections are updated. If this needs functionality to add a Project, then the service should publish an event that other services could subscribe to. One example would be the ProjectImages service could add an empty collection of images for a new project without any additional steps in the process.
 
 
