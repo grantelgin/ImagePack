@@ -64,6 +64,8 @@ See the section under *Add service to container*. Each of the interfaces for rep
 **appSettings.json**
 See the section *imagePack*. All config entries accessed in linked services are defined here.
 
+**Controllers**
+For each resource available through thge API, a separate Controller class shall be provided containing all required RESTful endpoints. This implementation includes 2 controllers. One for *ImagePack.Projects* and one for *ImagePack.ProjectImages.*
 
 
 ## ImagePack.Projects
@@ -79,8 +81,8 @@ The domain follows the *Inversion of Control* principle. All logic within the do
 The domain models namespace contains all required entities, value types and domain events. 
 Only one entity is needed in the Projects Domain currently. The Project class contains a Project name and Id. 
 
-**Persistence**
-The domain persistence namespace defines the typical CRUD operations required to retrieve and persist state changes within this service. 
+**Repositories**
+The domain repositories namespace defines the typical CRUD operations required to retrieve and persist state changes within this service. 
 The interface for persistence is simple for the Project domain. We only need 2 methods. One to get all projects, and one to get details for a single project. 
 
 **Services**
@@ -111,36 +113,50 @@ In the ImagePack context, the Projects service is simple and implements the Doma
 
 ## ImagePack.ProjectImages
 ---------------------------
-That
+The ProjectImages service provides methods for accessing a collection of project images for a given project.
+
+Structurally, ImagePack.ProjectImages is a microservice and contains all business logic for the *bounded context* of project images in this scope, as well as a complete repository and a publicly exposed API for use by other microservices that may need access.
 
 ### Domain
-**Models**
+The domain contains all business logic for the ImagePack.ProjectImages *bounded context*. In this use case, project images are a collection of image urls associated with a given project, but keeping all logic within the Domain namespace and without external dependencies, allows us to extend ProjectImages functionality as needed without the need to fix a web of connected services.
+The domain follows the *Inversion of Control* principle. All logic within the domain is coded against an interface. The concrete implementations are defined at the application layer and can be replaced by various repositories or services as the need arises, without any changes to the domain logic. 
 
-The project images domain only has one entity, the ImageLocator which provides a url for image data and the filename the data should be associated with. 
+**Models**
+The domain models namespace contains all required entities, value types and domain events.
+The project images domain only has one entity, the ImageLocator which provides a url for image data and the filename the data shall be associated with. 
 
 
 **Repositories**
-
+The domain repositories namespace defines the typical CRUD operations required to retrieve and persist state changes within this service. 
 Project images are organized in the context of a specific project, so the repository only needs one method, GetAllByProjectId. See ImagePack.Projects for details on getting a project Id.
 
 **Services**
-
+The domain services namespace defines one or more interfaces that can be implemented to use this service by any calling application. 
 The service for the ImagePack.ProjectImages is also simple. Just one method. GetAllByProjectId. 
 
 
 ### Persistence
+Separate from the Domain namespace, the Persistence namespace provides the collection of concrete classes that implement Persistence interfaces defined within the domain. Every repository must be specific to the *bounded context* the microservice represents. 
 One or more repository implementations can be added to the Persistence layer. The first pass uses a simple Json file repository. This should be replaced by a SQL or distributed cache layer such as redis before this would be deployed to any environment beyond testing on developer machines.
 
 **The Json file repository**
 
-The Json file repository has two parts. 1. The project-image-collection-locators, and the actual image data for each project.
-In this implementation, each project has a separate json file which contains links to the images associated with each project. A separate file which points to the Json file for each project is also required. **IMPORTANT**. In this implemantation, all project json files must be in the same Data folder. The Data folder is defined in the ImagePack.API appSettings.json file. See imagePack:projectImages:jsonFileRepo:imageLocatorDataDirectory
+The Json file repository has two parts. 
+
+1. The project-image-collection-locators  
+2. The actual image data for each project.
+
+In this implementation, each project has a separate json file which contains links to the images associated with each project. A separate file which points to the Json file for each project is also required. **IMPORTANT**. In this implemantation, all project json files must be in the same Data folder. The Data folder is defined in the ImagePack.API appSettings.json file. See ```imagePack:projectImages:jsonFileRepo:imageLocatorDataDirectory```
+
+To add new projects to the service, follow these steps:
+ 1. Add a project entry to ```ImagePack.Projects/Persistence/Data/imagePackProjects.json```. Make note of the id assigned.
+ 2. Add an entry to ```ImagePack.ProjectImages/Persistence/Data/imagePackProjectImageCollectionLocators.json```
+ 3. Add the project data file to the same folder in step 2. Make sure to change the output property of the file to *copy if newer*.
 
 ### Services
+The domain services namespace defines one or more interfaces that can be implemented to use this service by any calling application. 
 In the ImagePack context, the ProjectImages service is simple and implements the Domain Service, where it then just calls the repository methods by the same name. In a more complicated domain, the service could access or update multiple repositories. If this service is extended to support adding new images to projects, or adding new projects. 
 Consider publishing events when images are added to a project. Subscribers could be notified and update their state as appropriate.
 
-
-
-
-
+## Tests
+See ImagePack.Tests for details. 
